@@ -124,7 +124,7 @@ def login():
             "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.example_token"
         }), 200
 
-        # Increase failed attempts as the username or password was incorrect.
+        # Increase failed attempts as the username or password was incorrect .
     if username not in login_attempts:
         login_attempts[username] = {'count': 0, 'lockout_until': None}
 
