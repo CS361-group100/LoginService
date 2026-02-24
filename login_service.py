@@ -10,11 +10,11 @@ app = Flask(__name__)
 password_hasher = Bcrypt(app)
 
     # --- QUALITY ATTRIBUTE: Rate Limiting (Story 1) ---
-redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
+redis_url = os.getenv("REDIS_URL", "memory://")
 limiter = Limiter(
     key_func=get_remote_address,
     app=app,
-    default_limits=["5 per 1 minutes"],
+#    default_limits=["5 per 1 minutes"],
     storage_uri=redis_url,
     strategy="fixed-window"
 )
@@ -91,23 +91,24 @@ def login():
     username = data.get('username')
     password = data.get('password')
 
-        # Check if the user is currently locked out
+# Check if the user is currently locked out
     if username in login_attempts:
         attempts = login_attempts[username]
-        if attempts['lockout_until'] > datetime.now():
+        lockout_until = attempts.get("lockout_until")  # might be None
+
+        if lockout_until is not None and lockout_until > datetime.now():
             return jsonify(
                 error="You are blocked from logging in for 20 minutes."
             ), 403
-
         # Cycles through the list ('users_db') of objects (users) to check
         # if one of the objects has a 'username' that matches the input
         # username. Returns the username object if found, None if not.
     user = next((u for u in users_db if u['username'] == username), None)
 
-        # If user is not None and the password for the returned user object
-        # matches the input password then return a "user" object, an access
-        # token and the code 200.
-        # Acceptance Criteria (Story 1): 200 OK on success
+    # If user is not None and the password for the returned user object
+    # matches the input password then return a "user" object, an access
+    # token and the code 200.
+    # Acceptance Criteria (Story 1): 200 OK on success
     if user and password_hasher.check_password_hash(user['password'],
                                                     password):
             # Reset login attempts on successful login
