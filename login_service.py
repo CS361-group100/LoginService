@@ -14,7 +14,7 @@ redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
 limiter = Limiter(
     key_func=get_remote_address,
     app=app,
-    default_limits=["5 per 10 minutes"],
+    default_limits=["5 per 1 minutes"],
     storage_uri=redis_url,
     strategy="fixed-window"
 )
@@ -86,7 +86,6 @@ def register():
 
     # --- USER STORY 1: Sign In ---
 @app.route('/auth/login', methods=['POST'])
-@limiter.limit("5 per 10 minutes")  # Non-functional requirement (Story 1)
 def login():
     data = request.get_json()
     username = data.get('username')
