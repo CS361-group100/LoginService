@@ -14,7 +14,7 @@ and log in securely. It implements features like rate limiting and account locko
 - **Request Body**: 
 ````json
 {
-    "username": "user\_example",
+    "username": "user_example",
     "password": "SecurePassword123"
 }
 ````
@@ -42,7 +42,7 @@ curl -X POST http://localhost:5000/auth/register -H "Content-Type: application/j
 - **Request Body**: 
 ````json
 {
-    "username": "user\_example",
+    "username": "user_example",
     "password": "SecurePassword123"
 }
 ````
@@ -66,7 +66,7 @@ curl -X POST http://localhost:5000/auth/login -H "Content-Type: application/json
         "username": "user1",
         "displayName": "User"
     },
-    "accessToken": "your\_jwt\_token\_here"
+    "accessToken": "your_jwt_token_here"
 }
 ````
 #### UML Sequence Diagram
