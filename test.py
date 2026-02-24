@@ -4,7 +4,7 @@ from flask import json
 from login_service import app
 
 # Set the REDIS_URL for testing, if necessary
-os.environ['REDIS_URL'] = 'redis://localhost:6379'
+os.environ['REDIS_URL'] = 'memory://'
 
 @pytest.fixture
 def client():
@@ -91,6 +91,3 @@ def test_login_block_after_failed_attempts(client):
     assert response.get_json() == {
         "error": "You are blocked from logging in for 20 minutes."
     }
-
-if __name__ == '__main__':
-    pytest.main()
