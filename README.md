@@ -12,12 +12,12 @@ and log in securely. It implements features like rate limiting and account locko
 - **URL**: `/auth/register`
 - **Method**: `POST`
 - **Request Body**: 
-```json
+````json
 {
     "username": "user\_example",
     "password": "SecurePassword123"
 }
-```
+````
 
 - **Response**:
   - **201 Created** on successful registration.
