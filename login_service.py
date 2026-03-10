@@ -139,6 +139,13 @@ def login():
         "message": "Email or password is incorrect."
     }), 401
 
+#^^^^
+#above code is above usualy line length limits, consider trying 
+    password_matches = password_hasher.check_password_hash(
+        user['password'], password
+    )
+    
+    if user and password_matches:
 
 if __name__ == '__main__':
     app.run(debug=True)
