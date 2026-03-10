@@ -42,7 +42,7 @@ def ratelimit_handler(e):
     # --- USER STORY 2 & 3: New User/Create Account & Password Length ---
 @app.route('/auth/register', methods=['POST'])
 def register():
-        # grab the username and password entered.
+
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
@@ -55,10 +55,7 @@ def register():
             "message": "Password length must be 10 or more characters"
         }), 400
 
-        # Quality Attribute (Story 2): Data Integrity Unique Constraint
-        # the registation_lock ensures only one thread can execute this part
-        # of the code at a time. Prevents simultaneous creation of same
-        # username.
+#Prevents simultaneous creation of same username.
     with registration_lock:
         if any(u['username'] == username for u in users_db):
             return jsonify({
@@ -137,7 +134,6 @@ def login():
             error="Too many failed attempts. You are blocked from logging in for 20 minutes."
         ), 403
 
-        # Functional Requirement (Story 1): Error message for bad credentials
     return jsonify({
         "error": "INVALID_CREDENTIALS",
         "message": "Email or password is incorrect."
